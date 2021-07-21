@@ -1,3 +1,3 @@
-module github.com/kishnakumarkp/customermap
+module go-training/customer
 
 go 1.16

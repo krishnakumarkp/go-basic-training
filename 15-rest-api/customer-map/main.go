@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/kishnakumarkp/customermap/domain"
-	"github.com/kishnakumarkp/customermap/mapstore"
+	"go-training/customer/domain"
+	"go-training/customer/mapstore"
 )
 
 type CustomerController struct {

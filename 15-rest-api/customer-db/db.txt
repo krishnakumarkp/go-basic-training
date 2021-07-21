@@ -1,0 +1,8 @@
+go mod init go-training/customer-db
+
+CREATE TABLE customer (
+ID VARCHAR(30) NOT NULL,
+name VARCHAR(30) NOT NULL,
+email VARCHAR(50),
+UNIQUE (ID)
+);
