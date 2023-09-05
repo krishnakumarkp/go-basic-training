@@ -1,0 +1,14 @@
+version: '3'
+services:
+  golang-server:
+    build: .
+    image: golang_dev
+    volumes:
+      - ./src:/go/src/app
+    env_file:
+      - .env
+    ports:
+      - 8080:8080
+      - 4389:4389
+    stdin_open: true
+    tty: true
