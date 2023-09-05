@@ -3,7 +3,7 @@ package mapstore
 import (
 	"errors"
 
-	"go-training/customer/domain"
+	"github.com/krishnakumarkp/customer-map/domain"
 )
 
 type MapStore struct {
@@ -19,15 +19,15 @@ func (m MapStore) Create(c domain.Customer) error {
 		m.store[c.ID] = c
 		return nil
 	}
-	return errors.New("customer already present")
+	return errors.New("Customer already present")
 }
-func (m MapStore) Update(id string, c domain.Customer) error {
 
+func (m MapStore) Update(id string, c domain.Customer) error {
 	if _, ok := m.store[id]; ok {
 		m.store[id] = c
 		return nil
 	}
-	return errors.New("customer not found")
+	return errors.New("customer not present")
 }
 
 func (m MapStore) Delete(id string) error {
@@ -35,20 +35,20 @@ func (m MapStore) Delete(id string) error {
 		delete(m.store, id)
 		return nil
 	}
-	return errors.New("customer not found")
+	return errors.New("customer not present")
 }
 
 func (m MapStore) GetById(id string) (domain.Customer, error) {
-
-	if v, ok := m.store[id]; ok {
-		return v, nil
+	if c, ok := m.store[id]; ok {
+		return c, nil
 	}
-	return domain.Customer{}, errors.New("customer not found")
+	return domain.Customer{}, errors.New("customer not present")
 }
-func (m MapStore) GetAll() ([]domain.Customer, error) {
 
+func (m MapStore) GetAll() ([]domain.Customer, error) {
 	var customers []domain.Customer
-	err := errors.New("no cutomers found")
+	err := errors.New("customers not present")
+
 	for _, c := range m.store {
 		customers = append(customers, c)
 		err = nil

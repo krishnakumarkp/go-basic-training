@@ -1,0 +1,77 @@
+### Objective: Write idiomatic Go code with packages, struct and interface
+### Principles: Dependency Inversion, Explicit Dependencies, Declarative Composition
+"Be conservative in what you send, be liberal in what you accept" — Robustness principle
+"Accept interfaces, return structs" -- A Go Proverb
+* Create folder named customer
+* create file customer.go
+* Create a struct named Customer.
+* Create an interface named CustomerStore to specify behaviours for CRUD on Customer.
+
+```
+type Customer struct {
+	ID, Name, Email string
+}
+type CustomerStore interface {
+	Create (Customer) error
+	Update  (string, Customer) error
+	Delete(string) error
+	GetById(string) (Customer, error)
+	GetAll() ([]Customer, error)
+}
+```
+
+* Implement interface  CustomerStore into a struct MapStore to persist Customer data into a Map store (map[string]Customer)
+```
+	type MapStore struct {
+        store map[string]domain.Customer // An in-memory store with a map
+   }
+
+// Factory method gives a new instance of MapStore
+// This is for caller packages, not for mapstore
+func NewMapStore() *MapStore {
+	return &MapStore { store: make(map[string]domain.Customer)}
+}
+
+```
+
+* Implement all interface methods of CustomerStore
+
+```
+func (m MapStore) Create(c Customer) error {
+	if _, ok := m.store[c.ID]; !ok {
+		m.store[c.ID] = c
+		return nil
+	}
+	return errors.New("Customer already present")
+}
+```
+
+* Create package main
+*Create CustomerController struct
+```
+type CustomerController struct {
+			// Explicit dependency and declarative programming that hides dependent logic
+              store domain.CustomerStore // It can be any Store including MapStore
+        }
+        func (c CustomerController ) Add (c domain.Customer) error {
+              err:= c.store.Create(c)
+		if err!=nil {
+			fmt.Println(“Error:”, err) 	
+			return
+		}
+            fmt.Println(“New Customer has been created”) 
+       }
+
+func main() {
+    controller := CustomerController{
+               store : mapstore.NewMapStore(), // Inject the dependency
+	}
+
+	customer := Customer {
+		ID : “cust101”,
+		Name: “JPM”,
+	}
+
+controller.Add(customer) // Create new Customer
+```
+* By using CustomerController, make CRUD operations on Customer into a in-memory map store.
