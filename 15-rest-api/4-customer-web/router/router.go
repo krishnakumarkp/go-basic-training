@@ -1,10 +1,9 @@
 package router
 
 import (
-	"go-training/customer/controller"
-	"go-training/customer/domain"
-
 	"github.com/gorilla/mux"
+	"github.com/krishnakumarkp/customer-web/controller"
+	"github.com/krishnakumarkp/customer-web/domain"
 )
 
 func GetRouter(customerStore domain.CustomerStore) *mux.Router {

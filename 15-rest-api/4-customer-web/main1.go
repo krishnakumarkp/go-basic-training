@@ -4,9 +4,10 @@ import (
 	"net/http"
 
 	util "github.com/krishnakumarkp/customer-web/apputil"
+	"github.com/krishnakumarkp/customer-web/controller"
 	"github.com/krishnakumarkp/customer-web/mysqlstore"
-	"github.com/krishnakumarkp/customer-web/router"
 
+	"github.com/gorilla/mux"
 	"github.com/spf13/viper"
 )
 
@@ -28,9 +29,19 @@ func main() {
 	// Creates a customerstore which uses dbstore
 	customerStore := mysqlstore.NewCustomerStore(dbStore)
 
-	r := router.GetRouter(customerStore)
+	controller := controller.CustomerController{
+		Store: customerStore,
+	}
 
-	http.ListenAndServe(":8080", r)
+	router := mux.NewRouter()
+
+	router.HandleFunc("/customer", controller.Add).Methods("POST")
+	router.HandleFunc("/customer/{id}", controller.Get).Methods("GET")
+	router.HandleFunc("/customer", controller.GetAll).Methods("GET")
+	router.HandleFunc("/customer/{id}", controller.Delete).Methods("DELETE")
+	router.HandleFunc("/customer/{id}", controller.Update).Methods("PUT")
+
+	http.ListenAndServe(":8080", router)
 
 }
 

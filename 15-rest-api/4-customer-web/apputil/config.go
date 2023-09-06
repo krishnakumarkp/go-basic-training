@@ -5,3 +5,7 @@ type Configuration struct {
 }
 
 var AppConfig Configuration
+
+func init() {
+	AppConfig = Configuration{}
+}

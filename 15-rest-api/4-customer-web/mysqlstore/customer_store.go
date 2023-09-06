@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"errors"
 
-	"go-training/customer/domain"
+	"github.com/krishnakumarkp/customer-web/domain"
 )
 
 type CustomerStore struct {
@@ -40,9 +40,8 @@ func (cs CustomerStore) GetAll() ([]domain.Customer, error) {
 	sqlStatement := `select id, name, email FROM customer ORDER BY id;`
 	rows, err := cs.store.Db.Query(sqlStatement)
 	if err != nil {
-		return customers, errors.New("could not retrive customers")
+		return customers, errors.New("could not retrieve customers")
 	}
-
 	for rows.Next() {
 
 		customer = domain.Customer{}

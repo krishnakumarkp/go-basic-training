@@ -2,11 +2,10 @@ package controller
 
 import (
 	"encoding/json"
-
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"go-training/customer/domain"
+	"github.com/krishnakumarkp/customer-web/domain"
 )
 
 type CustomerController struct {
@@ -14,6 +13,7 @@ type CustomerController struct {
 }
 
 func (cc CustomerController) Add(w http.ResponseWriter, r *http.Request) {
+
 	var customer domain.Customer
 
 	err := json.NewDecoder(r.Body).Decode(&customer)
@@ -76,7 +76,7 @@ func (cc CustomerController) Update(w http.ResponseWriter, r *http.Request) {
 	w.Write(jd)
 }
 
-//Delete removes the customer from store
+// Delete removes the customer from store
 func (cc CustomerController) Delete(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	err := cc.Store.Delete(vars["id"])
@@ -88,7 +88,7 @@ func (cc CustomerController) Delete(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 }
 
-//GetAll gets all the cutomers
+// GetAll gets all the cutomers
 func (cc CustomerController) GetAll(w http.ResponseWriter, r *http.Request) {
 	customers, err := cc.Store.GetAll()
 	if err == nil {
