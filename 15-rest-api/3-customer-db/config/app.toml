@@ -1,6 +1,6 @@
 [mysql]
-Host        = "192.168.100.40"
+Host        = "mysql-server"
 Port        = "3306"
 User        = "root"
 Password    = "12345678"
-Database    = "myapp_db"
+Database    = "go_training"

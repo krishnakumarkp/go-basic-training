@@ -1,74 +1,13 @@
 package main
 
 import (
-	"fmt"
-
-	util "go-training/customer/apputil"
-	"go-training/customer/domain"
-	"go-training/customer/mysqlstore"
+	util "github.com/krishnakumarkp/customer-db/apputil"
+	"github.com/krishnakumarkp/customer-db/controller"
+	"github.com/krishnakumarkp/customer-db/domain"
+	"github.com/krishnakumarkp/customer-db/mysqlstore"
 
 	"github.com/spf13/viper"
 )
-
-type CustomerController struct {
-	store domain.CustomerStore
-}
-
-func (cc CustomerController) Add(c domain.Customer) error {
-	err := cc.store.Create(c)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return err
-	}
-	fmt.Println("New Customer has been created")
-	return err
-}
-
-func (cc CustomerController) Update(id string, c domain.Customer) error {
-	err := cc.store.Update(id, c)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return err
-	}
-	fmt.Println("Customer has been updated")
-	return err
-}
-
-func (cc CustomerController) Delete(id string) error {
-	err := cc.store.Delete(id)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return err
-	}
-	fmt.Println("Customer has been deleted")
-	return err
-}
-
-func (cc CustomerController) GetAll() error {
-	customers, err := cc.store.GetAll()
-	if err != nil {
-		fmt.Println("Error:", err)
-		return err
-	}
-	fmt.Println("Get all")
-	for _, v := range customers {
-		fmt.Println(v.ID, v.Name, v.Email)
-	}
-	return err
-}
-
-func (cc CustomerController) Get(id string) error {
-
-	customer, err := cc.store.GetById(id)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return err
-	} else {
-		fmt.Println("Get customer ", id)
-		fmt.Println(customer.ID, customer.Name, customer.Email)
-	}
-	return err
-}
 
 func main() {
 
@@ -88,40 +27,47 @@ func main() {
 	// Creates a customerstore which uses dbstore
 	customerStore := mysqlstore.NewCustomerStore(dbStore)
 
-	controller := CustomerController{
-		store: customerStore,
+	controller := controller.CustomerController{
+		Store: customerStore,
 	}
 
-	customer := domain.Customer{
-		ID:    "cust105",
-		Name:  "krishnakumar",
-		Email: "krishna@test.com",
+	customer1 := domain.Customer{
+		ID:    "cust101",
+		Name:  "Krishnakumar",
+		Email: "krishnakumarkp@gmail.com",
 	}
 
-	controller.Add(customer)
-
-	controller.Get("cust105")
-
-	customer = domain.Customer{
-		ID:    "cust106",
-		Name:  "Devesh",
-		Email: "Ddvesh@test.com",
+	customer2 := domain.Customer{
+		ID:    "cust101",
+		Name:  "Krishnakumar",
+		Email: "krishnakumarkp@gmail.com",
 	}
 
-	controller.Add(customer)
+	customer3 := domain.Customer{
+		ID:    "cust101",
+		Name:  "krishna",
+		Email: "krishna@gmail.com",
+	}
+
+	customer4 := domain.Customer{
+		ID:    "cust102",
+		Name:  "parvathy",
+		Email: "parvathy@gmail.com",
+	}
+
+	controller.Add(customer1)
+	controller.Add(customer2)
+	controller.Add(customer4)
+	controller.Update(customer3)
+	controller.Get("cust101")
 
 	controller.GetAll()
 
-	customer = domain.Customer{
-		ID:    "cust106",
-		Name:  "kk",
-		Email: "kk@test.com",
-	}
+	controller.Delete("cust101")
+	controller.Delete("cust101")
+	controller.Get("cust101")
 
-	controller.Update("cust106", customer)
-	controller.Delete("cust106")
 	controller.GetAll()
-
 }
 
 func init() {

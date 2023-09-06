@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"errors"
 
-	"go-training/customer/domain"
+	"github.com/krishnakumarkp/customer-db/domain"
 )
 
 type CustomerStore struct {
