@@ -4,6 +4,10 @@ import "fmt"
 
 func main() {
 
+	//What are first class functions?
+	//A language that supports first class functions allows functions to be assigned to variables,
+	// passed as arguments to other functions and returned from other functions. Go has support for first class functions.
+
 	//var b func(int,int)string
 	//assign a function to a variable
 	var a func()

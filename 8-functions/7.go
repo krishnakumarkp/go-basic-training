@@ -12,8 +12,8 @@ func main() {
 	// “defer” function call can be placed anywhere in the function.
 	// We can have multiple Defer function calls
 	// Can be used to release function resources
-	defer fmt.Println("sky")
-	defer fmt.Println("sky1")
+	defer printMessage("sky")
+	defer printMessage("earth")
 
 	primes := []int{2, 3, 5}
 	x := accessElement(primes, 3)
@@ -24,4 +24,8 @@ func main() {
 
 func accessElement(a []int, index int) int {
 	return a[index]
+}
+
+func printMessage(m string) {
+	fmt.Println(m)
 }

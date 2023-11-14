@@ -34,6 +34,8 @@ func main() {
 
 }
 
+//create factory fucntions inside package to return structs to mimic constructors
+
 // When to use pointer receiver and when to user value receiver
 // Ponter receivers can be used when changes made to the receiver inside the method should
 // be visible to the caller

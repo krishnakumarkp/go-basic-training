@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"math/rand"
-	"time"
 )
 
 func main() {
@@ -22,25 +21,24 @@ func main() {
 
 }
 
-//returns two ints and returns their sum as int
+// returns two ints and returns their sum as int
 func add(a int, b int) int {
 	return a + b
 }
 
-//multiple consecutive prameter of the same type
+// multiple consecutive prameter of the same type
 func addAdd(a, b, c int) int {
 	return a + b + c
 }
 
-//function named return varibales
+// function named return varibales
 func multiply(a, b int) int {
 	m := a * b
 	return m
 }
 
-//go functions allow to return multiple values
+// go functions allow to return multiple values
 func threeRandom() (int, int, int) {
-	rand.Seed(time.Now().UnixNano())
 	x := rand.Intn(200)
 	y := rand.Intn(200)
 	z := rand.Intn(200)
@@ -48,8 +46,15 @@ func threeRandom() (int, int, int) {
 	return x, y, z
 }
 
+//named return varibales
+
+func addAdd(a, b, c int) (sum int) {
+	sum = a + b + c
+	return
+}
+
+// function named return varibales
 func threeRandom() (x, y, z int) {
-	rand.Seed(time.Now().UnixNano())
 	x = rand.Intn(200)
 	y = rand.Intn(200)
 	z = rand.Intn(200)

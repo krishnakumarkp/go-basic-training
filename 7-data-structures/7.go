@@ -31,9 +31,17 @@ func main() {
 	t := []string{"g", "h", "i"}
 	fmt.Println("dcl:", t)
 
-	//append one slice to another slice
-
 	//names := make([]string, 2)
+
+	//make a slice from existing array
+	primes := [6]int{2, 3, 5, 7, 11, 13}
+
+	var s []int = primes[1:4]
+	s[0] = 16
+	fmt.Println(s)
+	fmt.Println(primes)
+
+	//append one slice to another slice
 
 	names := []string{"John", "Paul"}
 	morenames := []string{"George", "Ringo", "Pete"}

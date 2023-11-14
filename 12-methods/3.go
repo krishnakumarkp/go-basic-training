@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// method can be attached to any defined types
 //attaching a method to a map
 
 type mark map[string]int

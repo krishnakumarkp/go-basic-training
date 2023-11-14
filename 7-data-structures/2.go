@@ -7,7 +7,7 @@ func main() {
 	// 	The type of elements and length are both part of the array’s type.
 	// 	By default an array is zero-valued, which for ints means 0s.
 	var a [5]int
-	fmt.Println("emp:", a)
+	fmt.Println("empty array:", a)
 
 	// We can set a value at an index using the array[index] = value syntax,
 	// and get a value with array[index].
