@@ -281,4 +281,158 @@ func main() {
  ```
 
 
-# chaining interface
+# creating custom errors
+
+create folder fileprocessor and create file fileprocessor/fileprocessor.go
+
+```go
+package fileprocessor
+
+import (
+	"errors"
+	"os"
+)
+
+// ProcessFile simulates a file processing operation.
+func ProcessFile(fileName string) error {
+	// Simulate a file not found error
+	if _, err := os.Stat(fileName); os.IsNotExist(err) {
+		return errors.New("File not found: " + fileName)
+	}
+
+	// Simulate a general file processing error
+	return errors.New("Error processing file " + fileName + " during read operation: something went wrong")
+}
+
+
+```
+
+now in main.go
+
+```go
+
+func main() {
+	fileName := "example.txt"
+
+	err := fileprocessor.ProcessFile(fileName)
+
+	// Handle errors
+	if err != nil {
+		fmt.Println("Error:", err)
+	} else {
+		fmt.Println("File processed successfully.")
+	}
+	//what if we need to do identify the error in above code?
+	// we will need to write some bad code like this
+	// this is bad becuse the error messages are for humans to read
+	// not to be checked from the code
+
+	if err != nil {
+
+		if strings.Contains(err.Error(), "File not found") {
+			fmt.Println("Was not able to locate the file that you specified.")
+		}
+		if strings.Contains(err.Error(), "Error processing file") {
+			fmt.Println("Was not able to process the file.")
+		}
+
+	} else {
+		fmt.Println("File processed successfully.")
+	}
+
+}
+
+```
+How can we code this better ?
+
+error is a built-in interface type in Go.
+
+```go
+type error interface {
+    Error() string
+}
+```
+
+so any type that impliments this interface can be returned as an error
+
+
+create folder fileprocessor and create file fileprocessor/fileprocessor.go
+
+in fileprocessor.go
+
+```go
+package fileprocessor
+
+import (
+	"fmt"
+	"os"
+)
+
+// FileNotFoundError is a custom error type for file not found errors.
+type FileNotFoundError struct {
+	FileName string
+}
+
+func (e *FileNotFoundError) Error() string {
+	return fmt.Sprintf("File not found: %s", e.FileName)
+}
+
+// FileProcessingError is a custom error type for general file processing errors.
+type FileProcessingError struct {
+	FileName  string
+	Operation string
+	Err       error
+}
+
+func (e *FileProcessingError) Error() string {
+	return fmt.Sprintf("Error processing file %s during %s operation: %s", e.FileName, e.Operation, e.Err.Error())
+}
+
+// ProcessFile simulates a file processing operation.
+func ProcessFile(fileName string) error {
+	// Simulate a file not found error
+	if _, err := os.Stat(fileName); os.IsNotExist(err) {
+		return &FileNotFoundError{FileName: fileName}
+	}
+
+	// Simulate a general file processing error
+	return &FileProcessingError{
+		FileName:  fileName,
+		Operation: "read",
+		Err:       fmt.Errorf("something went wrong"),
+	}
+}
+
+
+```
+in main.go
+```go
+package main
+
+import (
+	"fmt"
+	"go-training/struct/fileprocessor"
+)
+
+func main() {
+	fileName := "example.txt"
+
+	err := fileprocessor.ProcessFile(fileName)
+
+	// Handle custom errors
+	if err != nil {
+		// Check if err is not nil before entering the type switch
+		switch e := err.(type) {
+		case *fileprocessor.FileNotFoundError:
+			fmt.Println("Was not able to locate the file that you specified:", e.FileName)
+		case *fileprocessor.FileProcessingError:
+			fmt.Printf("Error processing file %s during %s operation: %s\n", e.FileName, e.Operation, e.Err.Error())
+		default:
+			fmt.Println("Generic error:", err.Error())
+		}
+	} else {
+		fmt.Println("No error. File processed successfully.")
+	}
+}
+
+```

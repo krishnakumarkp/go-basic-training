@@ -2,64 +2,79 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
-// Type assertions
-// We can find out the underlying dynamic value of an interface using the syntax i.(Type)
-// where i is a variable of type interface and Type is a type that implements the interface.
-
-// The type assertion x.(T) asserts that the concrete value stored in x is of type T,
-// and that x is not nil.
-
-// If T is not an interface, it asserts that the dynamic type of x is identical to T.
-// If T is an interface, it asserts that the dynamic type of x implements T.
-
-type Shape interface {
-	Area() float64
+// Animal is an interface with a method Speak.
+type Animal interface {
+	Speak() string
 }
 
-type Cube struct {
-	side float64
+// Dog is a type that implements the Animal interface.
+type Dog struct{}
+
+// Speak is a method of Dog that returns a string.
+func (d Dog) Speak() string {
+	return "Woof!"
 }
 
-func (c Cube) Area() float64 {
-	return 6 * (c.side * c.side)
+// Cat is a type that implements the Animal interface.
+type Cat struct{}
+
+// Speak is a method of Cat that returns a string.
+func (c Cat) Speak() string {
+	return "Meow!"
 }
 
-func (c Cube) Volume() float64 {
-	return c.side * c.side * c.side
-}
+// PrintAnimalSound is a function that takes an animals and prints its sounds using type assertion.
+func PrintAnimalSound(animal Animal) {
 
-type Circle struct {
-	radious float64
-}
+	// 1. for some reason we need to get concrete type of dog in side the function
+	// The type assertion x.(T) asserts that the concrete value stored in x is of type T,
+	// and that x is not nil.
 
-func (c Circle) Area() float64 {
-	return math.Pi * c.radious * c.radious
+	// If T is not an interface, it asserts that the dynamic type of x is identical to T.
+	// If T is an interface, it asserts that the dynamic type of x implements T.
+	dog := animal.(Dog) //this will panic if animal is not dog
+	fmt.Println("This is a dog:", dog.Speak())
+
+	//2. this will return false and will not panic
+	if dog, ok := animal.(Dog); ok {
+		fmt.Println("This is a dog:", dog.Speak())
+	}
+
+	//3. we can make it better by if else
+
+	if dog, ok := animal.(Dog); ok {
+		fmt.Println("This is a dog:", dog.Speak())
+	} else if cat, ok := animal.(Cat); ok {
+		fmt.Println("This is a cat:", cat.Speak())
+	} else {
+		fmt.Println("Unknown animal type!")
+	}
+
+	//4. it can be still made better by using switch case
+
+	// We can find out the underlying dynamic value of an interface using the syntax i.(Type)
+	// where i is a variable of type interface and Type is a type that implements the interface.
+
+	switch v := animal.(type) {
+	case Dog:
+		fmt.Println("This is a dog:", v.Speak())
+	case Cat:
+		fmt.Println("This is a cat:", v.Speak())
+	default:
+		fmt.Println("Unknown animal type!")
+	}
+
 }
 
 func main() {
-	var s Shape = Cube{3}
-	var c Shape = Circle{5}
+	// Creating  Dog and Cat instances.
 
-	measure(s)
-	measure(c)
+	dog := Dog{}
+	cat := Cat{}
 
-}
-
-func measure(i Shape) {
-
-	c, ok := i.(Circle)
-	if ok {
-		fmt.Println("area of c of type Circle is", c.Area())
-	}
-
-	cb, ok := i.(Cube)
-
-	if ok {
-		fmt.Println("area of cb of type Cube is", cb.Area())
-		fmt.Println("volume of cb of type Cube is", cb.Volume())
-	}
-
+	// Calling the function to print animal sounds.
+	PrintAnimalSound(dog)
+	PrintAnimalSound(cat)
 }

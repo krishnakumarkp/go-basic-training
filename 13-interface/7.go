@@ -41,7 +41,20 @@ func main() {
 	o = Cube{3}
 	m = Cube{3}
 
+	PrintArea(s)
+	PrintVolume(o)
+	PrintAreaAndVolume(m)
+
+}
+
+func PrintArea(s Shape) {
 	fmt.Printf("Area of shape is %f \n", s.Area())
-	fmt.Printf("Volume of object is %f", o.Volume())
+}
+
+func PrintVolume(o Object) {
+	fmt.Printf("Volume of object is %f \n", o.Volume())
+}
+
+func PrintAreaAndVolume(m Material) {
 	fmt.Printf("Area and volume of Material is %f and %f \n", m.Area(), m.Volume())
 }

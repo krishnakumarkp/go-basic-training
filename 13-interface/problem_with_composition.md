@@ -322,8 +322,4 @@ func (d Dog) MakeSound() string {
 
 ```
 
-
-
-
-
 from https://www.youtube.com/watch?v=4KsgNO2exS8
