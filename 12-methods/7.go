@@ -7,12 +7,12 @@ type Person struct {
 	age  int
 }
 
-//Method with value receiver
+// Method with value receiver
 func (p Person) changeName(newName string) {
 	p.name = newName
 }
 
-//Method with pointer receiver
+// Method with pointer receiver
 func (p *Person) changeAge(newAge int) {
 	p.age = newAge
 }
@@ -33,8 +33,6 @@ func main() {
 	fmt.Printf("Person age after change : %d \n", p.age)
 
 }
-
-//create factory fucntions inside package to return structs to mimic constructors
 
 // When to use pointer receiver and when to user value receiver
 // Ponter receivers can be used when changes made to the receiver inside the method should

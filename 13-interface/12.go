@@ -5,6 +5,14 @@ import (
 	"math"
 )
 
+type AreaCalculator interface {
+	Area() float64
+}
+
+type VolumeCalculator interface {
+	Volume() float64
+}
+
 // Circle is a defined type for circles.
 type Circle struct {
 	Radius float64
@@ -29,26 +37,22 @@ func (c Cube) Volume() float64 {
 
 // CalculateArea calculates and prints the area of a given shape.
 func CalculateAreaAndVolume(shape interface{}) {
-	switch v := shape.(type) {
-	case Circle:
-		fmt.Printf("Area : %.2f\n", v.Area())
-	case Cube:
-		fmt.Printf("Area: %.2f\n", v.Area())
-		fmt.Printf("Volume: %.2f\n", v.Volume())
 
-	default:
-		fmt.Println("Unknown shape type!")
+	if areaCalc, ok := shape.(AreaCalculator); ok {
+		fmt.Printf("Area: %.2f\n", areaCalc.Area())
+	}
+	if volumeCalc, ok := shape.(VolumeCalculator); ok {
+		fmt.Printf("Volume: %.2f\n", volumeCalc.Volume())
 	}
 }
 
 func main() {
 	// Create instances of different shapes.
-	//circle := Circle{Radius: 5.0}
-	cube := Cube{3}
+	circle := Circle{Radius: 5.0}
+
+	//cube := Cube{3}
 
 	// Calculate and print the areas using the CalculateArea function.
-	CalculateAreaAndVolume(cube)
-
-	//what if we add more shapes like rectangle trigange etc?
-	// we will have to add more case conditions to the function
+	//CalculateAreaAndVolume(circle)
+	CalculateAreaAndVolume(circle)
 }

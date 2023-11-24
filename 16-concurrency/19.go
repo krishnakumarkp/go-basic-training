@@ -11,7 +11,7 @@ type result struct {
 	fibValue int
 }
 
-//we need to print the result as sonn as any calculation is done.Dont wait for all the calculation
+//we need to print the result as soon as any calculation is done.Dont wait for all the calculation
 func main() {
 	go spinner(1 * time.Second)
 	const n = 45

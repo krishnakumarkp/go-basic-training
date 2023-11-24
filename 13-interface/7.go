@@ -1,60 +1,53 @@
 package main
 
+//a slice of structs cannot be directly passed to a function that accepts a slice of an interface
+//https://stackoverflow.com/questions/12753805/type-converting-slices-of-interfaces/12754757#12754757
+
 import "fmt"
-
-// Embedding interfaces
-
-// In Go, an interface cannot implement other interfaces or extend them,
-// but we can create a new interface by merging two or more interfaces.
 
 type Shape interface {
 	Area() float64
 }
 
-type Object interface {
-	Volume() float64
+type Circle struct {
+	Radius float64
 }
 
-type Material interface {
-	Shape
-	Object
+func (c Circle) Area() float64 {
+	return 3.14 * c.Radius * c.Radius
 }
 
-type Cube struct {
-	side float64
+func CalculateTotalArea(shapes []Shape) float64 {
+	totalArea := 0.0
+	for _, shape := range shapes {
+		totalArea += shape.Area()
+	}
+	return totalArea
 }
 
-func (c Cube) Area() float64 {
-	return 6 * (c.side * c.side)
-}
+func CalculateArea(shape Shape) float64 {
+	totalArea := shape.Area()
 
-func (c Cube) Volume() float64 {
-	return c.side * c.side * c.side
+	return totalArea
 }
 
 func main() {
-	var s Shape
-	var o Object
-	var m Material
+	circles := []Circle{
+		{Radius: 1.0},
+		{Radius: 2.0},
+	}
 
-	s = Cube{3}
-	o = Cube{3}
-	m = Cube{3}
+	fmt.Println(CalculateArea(circles[0]))
 
-	PrintArea(s)
-	PrintVolume(o)
-	PrintAreaAndVolume(m)
+	// In Go, a slice of structs cannot be directly passed to a function that accepts a slice of an interface the struct implements because
+	//Go is statically typed, and types play a crucial role in function signatures.
 
-}
+	//CalculateTotalArea(circles)
 
-func PrintArea(s Shape) {
-	fmt.Printf("Area of shape is %f \n", s.Area())
-}
+	var shapes []Shape
+	for _, circle := range circles {
+		shapes = append(shapes, circle)
+	}
 
-func PrintVolume(o Object) {
-	fmt.Printf("Volume of object is %f \n", o.Volume())
-}
-
-func PrintAreaAndVolume(m Material) {
-	fmt.Printf("Area and volume of Material is %f and %f \n", m.Area(), m.Volume())
+	fmt.Println(CalculateTotalArea(shapes))
 }

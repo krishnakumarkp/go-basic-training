@@ -1,3 +1,6 @@
+### problem with compositional programming
+
+
 consider the below java code
 
 ```java
@@ -116,7 +119,7 @@ func main() {
 }
 
 ```
-unfortunaterly comnposition doesnot work like inheritance and we get output
+unfortunaterly composition doesnot work like inheritance and we get output
 
 ```
 cat says  

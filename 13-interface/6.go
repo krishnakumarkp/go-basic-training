@@ -2,12 +2,10 @@ package main
 
 import "fmt"
 
-// Multiple interfaces
-// A type can implement multiple interfaces.
+// Embedding interfaces
 
-type Geometry interface {
-	Area() float64
-}
+// In Go, an interface cannot implement other interfaces or extend them,
+// but we can create a new interface by merging two or more interfaces.
 
 type Shape interface {
 	Area() float64
@@ -15,6 +13,11 @@ type Shape interface {
 
 type Object interface {
 	Volume() float64
+}
+
+type Material interface {
+	Shape
+	Object
 }
 
 type Cube struct {
@@ -30,11 +33,28 @@ func (c Cube) Volume() float64 {
 }
 
 func main() {
-	c := Cube{3}
-	var s Shape = c
-	var o Object = c
-	var g Geometry = c
-	fmt.Println("are of s of interface type Shape is", s.Area())
-	fmt.Println("volume of o of interface type Object is", o.Volume())
-	fmt.Println("area of g of interface type Geometry is", g.Area())
+	var s Shape
+	var o Object
+	var m Material
+
+	s = Cube{3}
+	o = Cube{3}
+	m = Cube{3}
+
+	PrintArea(s)
+	PrintVolume(o)
+	PrintAreaAndVolume(m)
+
+}
+
+func PrintArea(s Shape) {
+	fmt.Printf("Area of shape is %f \n", s.Area())
+}
+
+func PrintVolume(o Object) {
+	fmt.Printf("Volume of object is %f \n", o.Volume())
+}
+
+func PrintAreaAndVolume(m Material) {
+	fmt.Printf("Area and volume of Material is %f and %f \n", m.Area(), m.Volume())
 }

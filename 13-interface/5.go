@@ -2,58 +2,39 @@ package main
 
 import "fmt"
 
-//Pointer vs Value receiver
+// Multiple interfaces
+// A type can implement multiple interfaces.
 
-type Worker interface {
-	Work()
+type Geometry interface {
+	Area() float64
 }
 
-type Person struct {
-	name string
+type Shape interface {
+	Area() float64
 }
 
-type Animal struct {
-	name string
+type Object interface {
+	Volume() float64
 }
 
-func (p Person) Work() {
-	fmt.Println(p.name, " is working")
+type Cube struct {
+	side float64
 }
 
-func (a *Animal) Work() {
-	fmt.Println(a.name, " is working")
+func (c Cube) Area() float64 {
+	return 6 * (c.side * c.side)
+}
+
+func (c Cube) Volume() float64 {
+	return c.side * c.side * c.side
 }
 
 func main() {
-	var w1 Worker
-
-	w1 = Person{
-		name: "Naveen",
-	}
-	w1.Work()
-
-	var w2 Worker
-	w2 = &Person{
-		name: "Krishna",
-	}
-	w2.Work()
-
-	var w3 Worker
-
-	//The dynamic type of interface w3 is Animal and we can clearly see that
-	// Animal does not implement the Work method but *Animal does.
-
-	w3 = Animal{
-		name: "horse",
-	}
-
-	w3.Work()
-
-	var w4 Worker
-
-	w4 = &Animal{
-		name: "horse",
-	}
-	w4.Work()
-
+	c := Cube{3}
+	var s Shape = c
+	var o Object = c
+	var g Geometry = c
+	fmt.Println("are of s of interface type Shape is", s.Area())
+	fmt.Println("volume of o of interface type Object is", o.Volume())
+	fmt.Println("area of g of interface type Geometry is", g.Area())
 }

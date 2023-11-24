@@ -1,10 +1,8 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
-//concreate type of interface variable
+// If a type implements an interface with a value receiver, values and pointers of that type can be used to satisfy the interface
 type Worker interface {
 	Work()
 }
@@ -13,20 +11,48 @@ type Person struct {
 	name string
 }
 
+type Animal struct {
+	name string
+}
+
 func (p Person) Work() {
 	fmt.Println(p.name, " is working")
 }
 
-func describe(w Worker) {
-	fmt.Printf("Concrete type %T value %v \n", w, w)
+func (a *Animal) Work() {
+	fmt.Println(a.name, " is working")
 }
 
 func main() {
-	var w Worker
-	w = Person{
+	var w1 Worker
+
+	w1 = Person{
 		name: "Naveen",
 	}
-	//the concreate type of w is Person not worker
-	describe(w)
-	w.Work()
+	w1.Work()
+
+	var w2 Worker
+	w2 = &Person{
+		name: "Krishna",
+	}
+	w2.Work()
+
+	var w3 Worker
+
+	//The dynamic type of interface w3 is Animal and we can clearly see that
+	// Animal does not implement the Work method but *Animal does.
+
+	w3 = Animal{
+		name: "horse",
+	}
+
+	w3.Work()
+
+	var w4 Worker
+
+	w4 = &Animal{
+		name: "horse",
+	}
+	w4.Work()
+
 }

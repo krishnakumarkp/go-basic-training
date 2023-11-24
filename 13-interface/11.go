@@ -1,24 +1,54 @@
-// In Go, an empty interface is an interface that has zero methods.
-// It serves as a type that can represent values of any type because any value in Go implements at least zero methods.
-// The empty interface is denoted by the keyword interface{}.
-
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
-// PrintValue takes an empty interface as a parameter.
-func PrintValue(value interface{}) {
-	fmt.Println("Value:", value)
+// Circle is a defined type for circles.
+type Circle struct {
+	Radius float64
+}
+
+// Area calculates the area of a circle.
+func (c Circle) Area() float64 {
+	return math.Pi * c.Radius * c.Radius
+}
+
+type Cube struct {
+	side float64
+}
+
+func (c Cube) Area() float64 {
+	return 6 * (c.side * c.side)
+}
+
+func (c Cube) Volume() float64 {
+	return c.side * c.side * c.side
+}
+
+// CalculateArea calculates and prints the area of a given shape.
+func CalculateAreaAndVolume(shape interface{}) {
+	switch v := shape.(type) {
+	case Circle:
+		fmt.Printf("Area : %.2f\n", v.Area())
+	case Cube:
+		fmt.Printf("Area: %.2f\n", v.Area())
+		fmt.Printf("Volume: %.2f\n", v.Volume())
+
+	default:
+		fmt.Println("Unknown shape type!")
+	}
 }
 
 func main() {
-	// Using an empty interface to pass values of different types.
-	PrintValue(42)
-	PrintValue("Hello, Gopher!")
-	PrintValue(3.14)
-}
+	// Create instances of different shapes.
+	//circle := Circle{Radius: 5.0}
+	cube := Cube{3}
 
-// The empty interface should be avoided as much as possible. If you ever use it,
-// you are saying that variable can be anything, even types you don’t expect.
-// Using it means you lose all the advantages of using a strongly typed language because the compiler can’t tell you that you made a mistake.
-// You won’t find the mistake until runtime.
+	// Calculate and print the areas using the CalculateArea function.
+	CalculateAreaAndVolume(cube)
+
+	//what if we add more shapes like rectangle trigange etc?
+	// we will have to add more case conditions to the function
+}
