@@ -11,7 +11,7 @@ type result struct {
 	fibValue int
 }
 
-//we need to print the result as soon as any calculation is done.Dont wait for all the calculation
+// we need to print the result as soon as any calculation is done.Dont wait for all the calculation
 func main() {
 	numbers := []int{45, 46, 42}
 	var waitgroup sync.WaitGroup

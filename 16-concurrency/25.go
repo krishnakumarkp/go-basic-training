@@ -1,33 +1,33 @@
 package main
 
 import (
-	"sync"
+	"fmt"
 	"time"
 )
 
 func main() {
-	c := make(chan string, 2)
+	// Create a buffered channel with a capacity of 5
+	bufferedChannel := make(chan int, 5)
 
-	var wg sync.WaitGroup
-	wg.Add(3)
-
+	// Start a goroutine to send values to the channel
 	go func() {
-		defer wg.Done()
-		c <- `foo`
+		for i := 1; i <= 5; i++ {
+			// Send values to the buffered channel
+			fmt.Printf("Sent: %d\n", i)
+			bufferedChannel <- i
+
+		}
+
+		// Close the channel after sending all values
+		close(bufferedChannel)
 	}()
 
-	go func() {
-		defer wg.Done()
-		c <- `bar`
-	}()
+	// Allow some time for the goroutine to send values
+	time.Sleep(time.Second)
 
-	go func() {
-		defer wg.Done()
-
-		time.Sleep(time.Second * 4)
-		println(`Message 1: ` + <-c)
-		println(`Message 2: ` + <-c)
-	}()
-
-	wg.Wait()
+	// Receive values from the buffered channel
+	for value := range bufferedChannel {
+		fmt.Printf("Received: %d\n", value)
+		time.Sleep(time.Millisecond * 500) // Simulate some processing time
+	}
 }

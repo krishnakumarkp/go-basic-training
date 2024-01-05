@@ -35,6 +35,12 @@ func (c circle) perimeter() float64 {
 	return 2 * math.Pi * c.radious
 }
 
+func measure(g geometry) {
+	fmt.Printf("geometry = %+v \n", g)
+	fmt.Printf("area = %+v \n", g.area())
+	fmt.Printf("perimeter = %+v \n", g.perimeter())
+}
+
 func main() {
 	r := rectangle{width: 3, height: 4}
 	c := circle{radious: 5}
@@ -43,10 +49,4 @@ func main() {
 	//We have just achieved polymorphism.
 	measure(r)
 	measure(c)
-}
-
-func measure(g geometry) {
-	fmt.Printf("geometry = %+v \n", g)
-	fmt.Printf("area = %+v \n", g.area())
-	fmt.Printf("perimeter = %+v \n", g.perimeter())
 }

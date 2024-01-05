@@ -1,4 +1,4 @@
-# in object oriented programming a interface is a common means for unrealted objects to communicate with each other.
+# in object oriented programming a interface is a common means for unrelated objects to communicate with each other.
 
 ```go
 
@@ -436,3 +436,7 @@ func main() {
 }
 
 ```
+
+
+### dependency inversion principle
+

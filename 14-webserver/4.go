@@ -8,7 +8,11 @@ import (
 type MyHttpHandler struct{}
 
 func (h MyHttpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello World!")
+	fmt.Fprintf(w, "Hello!")
+}
+
+func helloGolang(res http.ResponseWriter, req *http.Request) {
+	fmt.Fprint(res, "Hello Golang!")
 }
 
 // The ServeMux is a built-in struct type exported from the http package,
@@ -26,8 +30,10 @@ func main() {
 	mux.Handle("/", handler)
 
 	// handle `/hello/golang` route
-	mux.HandleFunc("/hello/golang", func(res http.ResponseWriter, req *http.Request) {
-		fmt.Fprint(res, "Hello Golang!")
+	mux.HandleFunc("/hello/golang", helloGolang)
+
+	mux.HandleFunc("/hello/world", func(res http.ResponseWriter, req *http.Request) {
+		fmt.Fprint(res, "Hello world!")
 	})
 
 	// listen and serve using `ServeMux`

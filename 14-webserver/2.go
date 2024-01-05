@@ -6,6 +6,16 @@ import (
 	"net/http"
 )
 
+//Go simplifies web server development by providing a built-in HTTP server in its standard library,
+// making it easy to create standalone web applications or microservices without the need
+//for external web server software.
+
+// Java applications that serve web content typically run within a web server like Apache Tomcat
+// JBoss etc
+
+// When using the Spring Boot framework, you can choose to package your application
+//with an embedded server, such as Tomcat, Jetty, or Undertow.
+
 // Go provides the net package https://golang.org/pkg/net/ that contains the utility packages to handle networking related stuff.
 // This package contains the http package https://golang.org/pkg/net/http/ which is used to create HTTP servers and to make HTTP requests as a client
 

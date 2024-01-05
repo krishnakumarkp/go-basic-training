@@ -33,17 +33,18 @@ func (cc CustomerController) Add(c customer.Customer) {
 	// But now the interface is provided by the higher level component which the lover level componenet will have to impliment
 	// so the dependency is now inverted.
 	cc.Store.Create(c)
-	fmt.Println("New Customer has been created")
+	fmt.Println("New Customer has been created\n")
 }
 
 func (cc CustomerController) Delete(id string) {
 	cc.Store.Delete(id)
-	fmt.Println("Customer has been deleted")
+	fmt.Println("Customer has been deleted\n")
 }
 
 func main() {
 
 	store := mysqlstore.Mysqlstore{}
+	//store := mongostore.Mongostore{}
 	//here you can see we are passing MySql store to customer controller (dependency injection)
 	controller := CustomerController{store}
 

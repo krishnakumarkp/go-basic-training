@@ -31,10 +31,16 @@ func (c Cube) Volume() float64 {
 
 func main() {
 	c := Cube{3}
-	var s Shape = c
-	var o Object = c
-	var g Geometry = c
-	fmt.Println("are of s of interface type Shape is", s.Area())
-	fmt.Println("volume of o of interface type Object is", o.Volume())
-	fmt.Println("area of g of interface type Geometry is", g.Area())
+
+	PrintArea(c)
+
+}
+
+//func PrintArea(s Geometry) {
+
+//fmt.Printf("Area of shape is %f \n", s.Area())
+
+func PrintArea(s Object) {
+
+	fmt.Printf("Volume of object is %f \n", s.Volume())
 }

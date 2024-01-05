@@ -11,9 +11,14 @@ func main() {
 
 	//c := make(chan string)
 
-	go func(ch chan string) {
-		time.Sleep(8 * time.Second)
-		ch <- "Hi"
-	}(c)
-	fmt.Println(<-c)
+	go sayHi(c)
+
+	result := <-c
+
+	fmt.Println(result)
+}
+
+func sayHi(ch chan string) {
+	time.Sleep(8 * time.Second)
+	ch <- "Hi"
 }

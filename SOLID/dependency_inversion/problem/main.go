@@ -30,7 +30,7 @@ func (cc CustomerController) Delete(id string) {
 func main() {
 
 	store := mysqlstore.Mysqlstore{}
-	//here you can see we are passing Mysqlstore to customer controller (dependency injection)
+	
 	controller := CustomerController{store}
 
 	customer := customer.Customer{

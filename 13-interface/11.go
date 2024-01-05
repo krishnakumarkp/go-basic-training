@@ -27,7 +27,6 @@ func (c Cube) Volume() float64 {
 	return c.side * c.side * c.side
 }
 
-// CalculateArea calculates and prints the area of a given shape.
 func CalculateAreaAndVolume(shape interface{}) {
 	switch v := shape.(type) {
 	case Circle:
@@ -35,7 +34,6 @@ func CalculateAreaAndVolume(shape interface{}) {
 	case Cube:
 		fmt.Printf("Area: %.2f\n", v.Area())
 		fmt.Printf("Volume: %.2f\n", v.Volume())
-
 	default:
 		fmt.Println("Unknown shape type!")
 	}
