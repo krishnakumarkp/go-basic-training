@@ -5,37 +5,26 @@ import (
 	"net/http"
 )
 
-type MyHttpHandler struct{}
+// there is also another servemux http.DefaultServeMux which is a global ServeMux instance.
+// if you  pass nil as the value of handler to the ListenAndServe function Go will internally use the http.DefaultServeMux
 
-func (h MyHttpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello!")
-}
+//We can add routes and handler functions to this instance by using the functions exposed by the http package.
 
-func helloGolang(res http.ResponseWriter, req *http.Request) {
-	fmt.Fprint(res, "Hello Golang!")
-}
-
-// The ServeMux is a built-in struct type exported from the http package,
-// that acts as HTTP request multiplexer.
-// ServeMux implements the ServeHTTP method which will make it implement
-// the Handler interfac
+//The http.HandleFunc function provided  does the exact same thing that the mux.HandleFunc does.
+// It adds a handler function to the http.DefaultServeMux to handle HTTP requests of a specific route path.
 
 func main() {
-	// create a new `ServeMux`
-	mux := http.NewServeMux()
-
-	handler := MyHttpHandler{}
-
-	// handle `/` route
-	mux.Handle("/", handler)
-
-	// handle `/hello/golang` route
-	mux.HandleFunc("/hello/golang", helloGolang)
-
-	mux.HandleFunc("/hello/world", func(res http.ResponseWriter, req *http.Request) {
-		fmt.Fprint(res, "Hello world!")
+	// handle `/` route to `http.DefaultServeMux`
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, "Hello World!")
 	})
 
-	// listen and serve using `ServeMux`
-	http.ListenAndServe(":8080", mux)
+	// handle `/hello/golang` route to `http.DefaultServeMux`
+	http.HandleFunc("/hello/golang", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, "Hello Golang!")
+	})
+
+	// listen and serve using `http.DefaultServeMux`
+	http.ListenAndServe(":8080", nil)
+
 }

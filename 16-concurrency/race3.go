@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sync"
 	"sync/atomic"
+	"time"
 )
 
 var counter int32
@@ -18,6 +19,7 @@ func main() {
 		//launch a goroutine with anonymous function
 		go func() {
 			atomic.AddInt32(&counter, 1)
+			time.Sleep(1 * time.Second)
 			waitgroup.Done()
 		}()
 	}

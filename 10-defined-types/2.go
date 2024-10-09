@@ -8,7 +8,7 @@ import "fmt"
 type myInt int
 type myString string
 
-//Type Alias Declarations
+// Type Alias Declarations
 type myIntAlias = int
 type myStringAlias = string
 
@@ -36,6 +36,8 @@ func main() {
 // The main purpose of introducing aliases was to make the refactoring of large codebases easier.
 // Defining an alias from the old name to the new name allows the developers not to break
 // any compatibility with existing clients.
+
+//refer to alias-use folder
 
 //package command
 // Deprecated: Use github.com/docker/cli/cli/streams.In instead

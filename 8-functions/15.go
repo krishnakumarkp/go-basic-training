@@ -17,6 +17,8 @@ func panickingFunction() {
 	//the panic
 	defer defferingFunction1()
 	panic("panic from panickingFunction()")
+	// a := []int{1, 2, 3}
+	// fmt.Println(a[3])
 	defer defferingFunction2()
 	fmt.Println("panickingFunction() done")
 }

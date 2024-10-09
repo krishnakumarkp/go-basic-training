@@ -2,12 +2,23 @@ package main
 
 import (
 	"fmt"
-	"time"
 )
 
 func main() {
 	i := 2
 	fmt.Print("Write ", i, " as ")
+	switch i {
+	case 1:
+		fmt.Println("One")
+	case 2:
+		fmt.Println("Two")
+	case 3:
+		fmt.Println("Three")
+	default:
+		fmt.Println("some other number")
+	}
+
+	//multiple expressions in the same case statement
 	switch i {
 	case 0, 1:
 		fmt.Println("One")
@@ -19,20 +30,12 @@ func main() {
 		fmt.Println("some other number")
 	}
 
-	//multiple expressions in the same case statement
-	switch time.Now().Weekday() {
-	case time.Saturday, time.Sunday:
-		fmt.Println("It's the weekend")
-	default:
-		fmt.Println("It's a weekday")
-	}
-
 	//Switch without a condition is an alternate way to express if/else logic
-	t := time.Now()
+	t := 12
 	switch {
-	case t.Hour() < 12:
+	case t < 12:
 		fmt.Println("Good morning!")
-	case t.Hour() < 17:
+	case t < 17:
 		fmt.Println("Good afternoon.")
 	default:
 		fmt.Println("Good Evening.")

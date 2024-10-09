@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-//Use Field Tags in the Definition of Struct Type
+// Use Field Tags in the Definition of Struct Type
 type Company struct {
 	CompanyName    string `json:"name"`
 	OfficeLocation string `json:"location"`
