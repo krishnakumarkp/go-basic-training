@@ -1,0 +1,9 @@
+[mysql]
+Host        = "localhost"
+Port        = "3306"
+User        = "root"
+Password    = "12345678"
+Database    = "dev_database"
+
+[order]
+Host        = "http://localhost:8082"
