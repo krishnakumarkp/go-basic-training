@@ -30,7 +30,7 @@ func (cs CustomerStore) GetById(id string) (domain.Customer, error) {
 	case nil:
 		return customer, err
 	default:
-		panic(err)
+		return customer, err
 	}
 }
 func (cs CustomerStore) GetAll() ([]domain.Customer, error) {
@@ -56,11 +56,11 @@ func (cs CustomerStore) GetAll() ([]domain.Customer, error) {
 
 func (cs CustomerStore) Create(customer domain.Customer) error {
 	sqlStatement := "INSERT INTO customer(ID, Name, Email) VALUES (?,?,?)"
-	insForm, err := cs.store.Db.Prepare(sqlStatement)
+	stmt, err := cs.store.Db.Prepare(sqlStatement)
 	if err != nil {
 		return err
 	}
-	_, err = insForm.Exec(customer.ID, customer.Name, customer.Email)
+	_, err = stmt.Exec(customer.ID, customer.Name, customer.Email)
 	return err
 }
 

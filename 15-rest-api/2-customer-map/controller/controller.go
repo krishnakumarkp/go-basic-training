@@ -1,3 +1,7 @@
+//Controller methods had no reponse it just prints the response to standard out so it is not easy to test
+// Since the CustomerController methods primarily use fmt.Println, you might need to capture and compare their output to assert
+//correctness. You can use a custom bytes.Buffer to capture printed output.
+
 package controller
 
 import (

@@ -2,13 +2,12 @@ package main
 
 import (
 	"net/http"
+	"os"
 
+	"github.com/joho/godotenv"
 	util "github.com/krishnakumarkp/customer-web/apputil"
 	"github.com/krishnakumarkp/customer-web/controller"
 	"github.com/krishnakumarkp/customer-web/mysqlstore"
-
-	"github.com/gorilla/mux"
-	"github.com/spf13/viper"
 )
 
 func main() {
@@ -33,29 +32,26 @@ func main() {
 		Store: customerStore,
 	}
 
-	router := mux.NewRouter()
+	r := http.NewServeMux()
 
-	router.HandleFunc("/customer", controller.Add).Methods("POST")
-	router.HandleFunc("/customer/{id}", controller.Get).Methods("GET")
-	router.HandleFunc("/customer", controller.GetAll).Methods("GET")
-	router.HandleFunc("/customer/{id}", controller.Delete).Methods("DELETE")
-	router.HandleFunc("/customer/{id}", controller.Update).Methods("PUT")
+	r.HandleFunc("POST /customer", controller.Add)
+	r.HandleFunc("GET /customer/{id}", controller.Get)
+	r.HandleFunc("GET /customer", controller.GetAll)
+	r.HandleFunc("DELETE /customer/{id}", controller.Delete)
+	r.HandleFunc("PUT /customer/{id}", controller.Update)
 
-	http.ListenAndServe(":8080", router)
+	http.ListenAndServe(":8080", r)
 
 }
 
 func init() {
-	viper.SetConfigName("app")
-	viper.AddConfigPath("config")
-	err := viper.ReadInConfig()
-	if err != nil {
+	if err := godotenv.Load(); err != nil {
 		panic(err)
 	}
-	util.AppConfig.DBHost = viper.GetString("mysql.Host")
-	util.AppConfig.DBPort = viper.GetString("mysql.Port")
-	util.AppConfig.DBUser = viper.GetString("mysql.User")
-	util.AppConfig.DBPassword = viper.GetString("mysql.Password")
-	util.AppConfig.Database = viper.GetString("mysql.Database")
+	util.AppConfig.DBHost = os.Getenv("MYSQL_HOST")
+	util.AppConfig.DBPort = os.Getenv("MYSQL_PORT")
+	util.AppConfig.DBUser = os.Getenv("MYSQL_USER")
+	util.AppConfig.DBPassword = os.Getenv("MYSQL_PASSWORD")
+	util.AppConfig.Database = os.Getenv("MYSQL_DATABASE")
 
 }

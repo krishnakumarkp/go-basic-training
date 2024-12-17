@@ -23,7 +23,9 @@ func main() {
 }
 
 func accessElement(a []int, index int) int {
-	return a[index]
+	v := a[index]
+	//defer printMessage("water")
+	return v
 }
 
 func printMessage(m string) {

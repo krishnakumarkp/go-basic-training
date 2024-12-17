@@ -40,7 +40,7 @@ func main() {
 
 //fmt.Printf("Area of shape is %f \n", s.Area())
 
-func PrintArea(s Object) {
+func PrintVolume(s Object) {
 
 	fmt.Printf("Volume of object is %f \n", s.Volume())
 }

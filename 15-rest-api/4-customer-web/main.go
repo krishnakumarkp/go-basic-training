@@ -1,50 +1,9 @@
 package main
 
-import (
-	"net/http"
-
-	util "github.com/krishnakumarkp/customer-web/apputil"
-	"github.com/krishnakumarkp/customer-web/mysqlstore"
-	"github.com/krishnakumarkp/customer-web/router"
-
-	"github.com/spf13/viper"
-)
+import "github.com/krishnakumarkp/customer-web/app"
 
 func main() {
 
-	config := mysqlstore.Config{
-		Host:     util.AppConfig.DBHost,
-		Port:     util.AppConfig.DBPort,
-		User:     util.AppConfig.DBUser,
-		Password: util.AppConfig.DBPassword,
-		Database: util.AppConfig.Database,
-	}
-	// Creates a Mysql DB instance
-	dbStore, err := mysqlstore.New(config)
-	if err != nil {
-		panic(err)
-	}
-
-	// Creates a customerstore which uses dbstore
-	customerStore := mysqlstore.NewCustomerStore(dbStore)
-
-	r := router.GetRouter(customerStore)
-
-	http.ListenAndServe(":8080", r)
-
-}
-
-func init() {
-	viper.SetConfigName("app")
-	viper.AddConfigPath("config")
-	err := viper.ReadInConfig()
-	if err != nil {
-		panic(err)
-	}
-	util.AppConfig.DBHost = viper.GetString("mysql.Host")
-	util.AppConfig.DBPort = viper.GetString("mysql.Port")
-	util.AppConfig.DBUser = viper.GetString("mysql.User")
-	util.AppConfig.DBPassword = viper.GetString("mysql.Password")
-	util.AppConfig.Database = viper.GetString("mysql.Database")
+	app.StartApp()
 
 }

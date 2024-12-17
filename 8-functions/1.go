@@ -31,12 +31,6 @@ func addAdd(a, b, c int) int {
 	return a + b + c
 }
 
-// function named return varibales
-func multiply(a, b int) int {
-	m := a * b
-	return m
-}
-
 // go functions allow to return multiple values
 func threeRandom() (int, int, int) {
 	x := rand.Intn(200)

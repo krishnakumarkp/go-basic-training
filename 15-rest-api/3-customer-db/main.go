@@ -1,12 +1,13 @@
 package main
 
 import (
+	"os"
+
+	"github.com/joho/godotenv"
 	util "github.com/krishnakumarkp/customer-db/apputil"
 	"github.com/krishnakumarkp/customer-db/controller"
 	"github.com/krishnakumarkp/customer-db/domain"
 	"github.com/krishnakumarkp/customer-db/mysqlstore"
-
-	"github.com/spf13/viper"
 )
 
 func main() {
@@ -71,16 +72,13 @@ func main() {
 }
 
 func init() {
-	viper.SetConfigName("app")
-	viper.AddConfigPath("config")
-	err := viper.ReadInConfig()
-	if err != nil {
+	if err := godotenv.Load(); err != nil {
 		panic(err)
 	}
-	util.AppConfig.DBHost = viper.GetString("mysql.Host")
-	util.AppConfig.DBPort = viper.GetString("mysql.Port")
-	util.AppConfig.DBUser = viper.GetString("mysql.User")
-	util.AppConfig.DBPassword = viper.GetString("mysql.Password")
-	util.AppConfig.Database = viper.GetString("mysql.Database")
+	util.AppConfig.DBHost = os.Getenv("MYSQL_HOST")
+	util.AppConfig.DBPort = os.Getenv("MYSQL_PORT")
+	util.AppConfig.DBUser = os.Getenv("MYSQL_USER")
+	util.AppConfig.DBPassword = os.Getenv("MYSQL_PASSWORD")
+	util.AppConfig.Database = os.Getenv("MYSQL_DATABASE")
 
 }

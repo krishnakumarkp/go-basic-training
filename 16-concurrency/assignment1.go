@@ -29,9 +29,21 @@ func main() {
 	resultChan := make(chan int)
 	var wg sync.WaitGroup
 
-	// write you code here so that the numbers in the numbers slice above is grouped to groups of 10 numbers
+	// write your code here so that the numbers in the numbers slice above is grouped to groups of 10 numbers
 	// passed in to the function sum as a goroutine. so if there are 100 numbers in slice you will call function
 	// sum as goroutine 10 times in a loop.
+
+	// Calculate the number of groups
+	groupSize := 10
+	numGroups := len(numbers) / groupSize
+
+	for i := 0; i < numGroups; i++ {
+		startIndex := i * groupSize
+		endIndex := (i + 1) * groupSize
+		// some code is needed in this line. you need to figure that out
+		go sum(numbers[startIndex:endIndex], resultChan, &wg)
+
+	}
 
 	// Wait for all goroutines to finish
 
