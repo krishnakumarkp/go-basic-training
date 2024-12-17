@@ -35,7 +35,7 @@ func New(cfg Config) (DataStore, error) {
 	}
 
 	if err := db.Ping(); err != nil {
-		err = errors.New("could not ping the mysql database")
+		err = errors.New("could not ping the mysql database " + cfg.Database)
 		return store, err
 	}
 

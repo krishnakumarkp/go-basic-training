@@ -1,23 +1,20 @@
 package router
 
 import (
-	"github.com/gorilla/mux"
+	"net/http"
+
 	"github.com/krishnakumarkp/customer-web/controller"
-	"github.com/krishnakumarkp/customer-web/domain"
 )
 
-func GetRouter(customerStore domain.CustomerStore) *mux.Router {
+func GetRouter(controller controller.CustomerControllerInterface) *http.ServeMux {
 
-	controller := controller.CustomerController{
-		Store: customerStore,
-	}
+	mux := http.NewServeMux()
 
-	router := mux.NewRouter()
+	mux.HandleFunc("POST /customer", controller.Add)
+	mux.HandleFunc("GET /customer/{id}", controller.Get)
+	mux.HandleFunc("GET /customer", controller.GetAll)
+	mux.HandleFunc("DELETE /customer/{id}", controller.Delete)
+	mux.HandleFunc("PUT /customer/{id}", controller.Update)
 
-	router.HandleFunc("/customer", controller.Add).Methods("POST")
-	router.HandleFunc("/customer/{id}", controller.Get).Methods("GET")
-	router.HandleFunc("/customer", controller.GetAll).Methods("GET")
-	router.HandleFunc("/customer/{id}", controller.Delete).Methods("DELETE")
-	router.HandleFunc("/customer/{id}", controller.Update).Methods("PUT")
-	return router
+	return mux
 }
