@@ -1,29 +1,57 @@
-1. create foldter go-training
-2. create go-training./go-demo
-3. go to terminal and type go mod init cybage.com/go-demo
-4. create folder mascot
-5. create file mascot/mascost.go
-6. This is going to trigger up the go extension .
-7. Click on analysis tools and click install
-8. in mascot.go
 
+# 🟢 Go Modules Hands-on 
+
+## 1. Create Project Structure
+
+```bash
+mkdir go-training
+cd go-training
+mkdir go-demo
+cd go-demo
 ```
+
+---
+
+## 2. Initialize Go Module
+
+```bash
+go mod init github.com/krishnakumarkp/go-training/go-demo
+```
+
+👉 This creates a `go.mod` file (no need for GOPATH setup).
+
+---
+
+## 3. Create Package
+
+```bash
+mkdir mascot
+touch mascot/mascot.go
+```
+
+---
+
+## 4. Write Code in `mascot/mascot.go`
+
+```go
 package mascot
 
 func BestMascot() string {
-	return "Tux"
+	return "Gopher"
 }
 ```
 
-9. main.go 
-    
-```
+---
+
+## 5. Create `main.go`
+
+```go
 package main
 
 import (
 	"fmt"
 
-	"cybage.com/go-demo/mascot"
+	"github.com/krishnakumarkp/go-training/go-demo/mascot"
 )
 
 func main() {
@@ -31,17 +59,62 @@ func main() {
 }
 ```
 
-10. let us see how to use third party package 
+---
 
-11.  in main.go add import the rsc.io/quote package and add a call to its Go function
+## 6. Run the Program
+
+```bash
+go run main.go
 ```
-fmt.Println(quote.Go())
+
+---
+
+## 7. Add a Third-Party Package
+
+Update `main.go`:
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/krishnakumarkp/go-training/go-demo/mascot"
+	"rsc.io/quote"
+)
+
+func main() {
+	fmt.Println(mascot.BestMascot())
+	fmt.Println(quote.Go())
+}
 ```
-12.  go mod tidy
-13.  how to write a test
-Go has a built-in testing command called go test and a package testing which combine to give a minimal but complete testing experience.
-14. create file mascot_test.go
+
+---
+
+## 8. Download Dependencies
+
+```bash
+go mod tidy
 ```
+
+👉 This:
+
+* Downloads dependencies
+* Updates `go.mod` and `go.sum`
+
+---
+
+## 9. Write Unit Test
+
+Create file:
+
+```bash
+touch mascot/mascot_test.go
+```
+
+### `mascot_test.go`
+
+```go
 package mascot
 
 import "testing"
@@ -52,9 +125,27 @@ func TestBestMascot(t *testing.T) {
 	}
 }
 ```
-15.  cd mascot
-16.  go test 
-17.  go test tool has built-in code-coverage go test -cover
 
+---
 
-https://golang.org/doc/tutorial/getting-started
+## 10. Run Tests
+
+```bash
+cd mascot
+go test
+```
+
+---
+
+## 11. Run Tests with Coverage
+
+```bash
+go test -cover
+```
+
+---
+
+## 🔗 Reference
+
+[https://go.dev/doc/tutorial/getting-started](https://go.dev/doc/tutorial/getting-started)
+
